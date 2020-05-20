@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#314252"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/lblTitolo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="49dp"
+        android:fontFamily="@font/bangers"
+        android:text="Gestione Riparazioni "
+        android:textColor="#DCDCDC"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/cboMacchine"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblTitolo" />
+
+    <TextView
+        android:id="@+id/txtNumeroAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#DCDCDC"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cboMacchine"
+        app:layout_constraintTop_toBottomOf="@+id/lblTitolo" />
+
+    <ListView
+        android:id="@+id/lstRiparazioni"
+        style="@android:style/Widget.Material.ListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cboMacchine"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/lblVisErrori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="155dp"
+        android:textAlignment="center"
+        android:textColor="#F44336"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblTitolo" />
+
+    <LinearLayout
+        android:id="@+id/linLayoutIntestazione"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#0066CC"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/lstRiparazioni"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cboMacchine">
+
+        <TextView
+            android:id="@+id/txtMarcaIntestaz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto"
+            android:textAlignment="center"
+            android:textColor="#FBFBFB" />
+
+        <TextView
+            android:id="@+id/txtDataIntestaz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Data"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FBFBFB" />
+
+        <TextView
+            android:id="@+id/txtCausaIntestaz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Causa"
+            android:textAlignment="center"
+            android:textColor="#FBFBFB" />
+
+        <TextView
+            android:id="@+id/txtCostoIntestaz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Costo"
+            android:textAlignment="center"
+            android:textColor="#FBFBFB" />
+
+        <TextView
+            android:id="@+id/txtPagatoIntestaz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pagato"
+            android:textAlignment="center"
+            android:textColor="#FBFBFB" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtNumeroRiparazioni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#DCDCDC"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cboMacchine"
+        app:layout_constraintTop_toBottomOf="@+id/txtNumeroAuto" />
+</androidx.constraintlayout.widget.ConstraintLayout>
