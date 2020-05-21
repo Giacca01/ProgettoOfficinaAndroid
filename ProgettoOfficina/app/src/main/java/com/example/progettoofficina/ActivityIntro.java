@@ -19,6 +19,7 @@ public class ActivityIntro extends AppCompatActivity {
             public void onClick(View view) {
                 Intent iForm2 = new Intent(getApplicationContext(), MainActivity.class); //Intent: oggetto che consente di passare da un intent all'altra
                 startActivity(iForm2);
+                finish();
             }
         });
     }

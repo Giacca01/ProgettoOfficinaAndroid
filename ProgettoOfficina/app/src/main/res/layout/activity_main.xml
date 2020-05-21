@@ -142,4 +142,18 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/cboMacchine"
         app:layout_constraintTop_toBottomOf="@+id/txtNumeroAuto" />
+
+    <Button
+        android:id="@+id/btnAddRiparazione"
+        android:layout_width="83dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:background="#2e8b57"
+        android:text="Inserisci"
+        android:textAlignment="center"
+        android:textColor="#DCDCDC"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lstRiparazioni" />
 </androidx.constraintlayout.widget.ConstraintLayout>

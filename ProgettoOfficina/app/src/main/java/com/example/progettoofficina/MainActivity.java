@@ -2,10 +2,12 @@ package com.example.progettoofficina;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         lblVisErrori.setVisibility(View.INVISIBLE);
         final Spinner cboAuto = (Spinner) findViewById(R.id.cboMacchine);
         final ArrayList<Auto> listaAuto= new ArrayList<Auto>();
+        final Button btnAddRip = (Button)findViewById(R.id.btnAddRiparazione);
         try {
-            caricaRiparazioni();
             caricaMacchine(listaAuto);
             //Gestione Selezione Elemento da ComboBox Automobili
             cboAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -76,10 +78,24 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+            btnAddRip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent iForm2 = new Intent(getApplicationContext(), activity_inserimento.class); //Intent: oggetto che consente di passare da un intent all'altra
+                    startActivity(iForm2);
+                }
+            });
         }
         catch(Exception ex){
             gestErrori(ex.getMessage());
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Spinner cboAuto = (Spinner) findViewById(R.id.cboMacchine);
+        cboAuto.setSelection(0);
     }
 
     /*************************************************************/
