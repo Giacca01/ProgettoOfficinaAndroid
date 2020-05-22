@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity_inserimento"></activity>
+        <activity android:name=".ActivityModifica"></activity>
+        <activity android:name=".activity_inserimento" />
         <activity android:name=".ActivityIntro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

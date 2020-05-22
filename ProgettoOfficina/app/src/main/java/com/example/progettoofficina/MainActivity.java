@@ -37,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         TextView lblVisErrori = (TextView) findViewById(R.id.lblVisErrori);
         lblVisErrori.setVisibility(View.INVISIBLE);
         final Spinner cboAuto = (Spinner) findViewById(R.id.cboMacchine);
         final ArrayList<Auto> listaAuto= new ArrayList<Auto>();
         final Button btnAddRip = (Button)findViewById(R.id.btnAddRiparazione);
+        final ArrayList<Riparazioni> listaRiparazioni = new ArrayList<Riparazioni>();
+        final ListView lstRiparazioni = (ListView) findViewById(R.id.lstRiparazioni);
+
         try {
+            //Caricamento Combo Macchine e Lista Riparazioni
             caricaMacchine(listaAuto);
             //Gestione Selezione Elemento da ComboBox Automobili
             cboAuto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -59,9 +64,8 @@ public class MainActivity extends AppCompatActivity {
                             protected void onPostExecute(String result) {
                                 if (result.contains("Exception: "))
                                     gestErrori(result);
-                                else {
-                                    caricaClasseRiparazioni(result);
-                                }
+                                else
+                                    caricaClasseRiparazioni(result, listaRiparazioni);
                             }
                         };
                         reqFilter.addParam(HTTPRequest.POST,"idAuto",codAuto);
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         //Carico l'elenco completo delle riparazioni
-                        caricaRiparazioni();
+                        caricaRiparazioni(listaRiparazioni);
                     }
                 }
 
@@ -78,10 +82,30 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+            //Apertura Activity per inserimento nuova riparazione
             btnAddRip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent iForm2 = new Intent(getApplicationContext(), activity_inserimento.class); //Intent: oggetto che consente di passare da un intent all'altra
+                    Intent iForm2 = new Intent(getApplicationContext(), activity_inserimento.class); //Intent: oggetto che consente di passare da un activity all'altra
+                    startActivity(iForm2);
+                }
+            });
+            //Apertura Activity per modifica riparazione
+            lstRiparazioni.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent iForm2 = new Intent(getApplicationContext(), ActivityModifica.class);
+                    //Creo un bundle, ovvero un oggetto che mi consente di passare dei parametri all'activity agganciata all'intent
+                    //in questo caso passo i dati della riparazione cliccata
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idRip", listaRiparazioni.get(i).getIdRiparazione());
+                    bundle.putInt("idAuto", listaRiparazioni.get(i).getIdAutoRiparazione());
+                    bundle.putString("dataRip", listaRiparazioni.get(i).getDataRiparazione().toString());
+                    bundle.putString("causaRip", listaRiparazioni.get(i).getCausaRiparazione());
+                    bundle.putInt("costoRip", listaRiparazioni.get(i).getCostoRiparazione());
+                    bundle.putInt("pagatoRip", listaRiparazioni.get(i).getPagatoRiparazione());
+                    //Aggiungo il bundle tra gli extras dell'activity
+                    iForm2.putExtras(bundle);
                     startActivity(iForm2);
                 }
             });
@@ -91,24 +115,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /********************************************/
+    /*Gestione Ripristino Activity da Background*/
+    /********************************************/
     @Override
     protected void onResume(){
         super.onResume();
         Spinner cboAuto = (Spinner) findViewById(R.id.cboMacchine);
+        //Cambio l'auto selezionata in moda da scatenare il "refresh" della select
         cboAuto.setSelection(0);
     }
 
     /*************************************************************/
     /*Caricamento list view con elenco completo delle riparazioni*/
     /*************************************************************/
-    private void caricaRiparazioni(){
+    private void caricaRiparazioni(final ArrayList<Riparazioni> listaRiparazioni){
         HTTPRequest req = new HTTPRequest(url + "/WebServicesOfficina/elencoRiparazioni.php"){
             @Override
             protected void onPostExecute(String result){
                 if (result.contains("Exception: "))
                     gestErrori(result);
                 else {
-                    caricaClasseRiparazioni(result);
+                    caricaClasseRiparazioni(result, listaRiparazioni);
                 }
             }
         };
@@ -118,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
     /******************************************************/
     /*Caricamento dati su istanza della classe riparazioni*/
     /******************************************************/
-    private void caricaClasseRiparazioni(String result){
-        final ArrayList<Riparazioni> listaRiparazioni = new ArrayList<Riparazioni>();
+    private void caricaClasseRiparazioni(String result, final ArrayList<Riparazioni> listaRiparazioni){
         final ListView lstRiparazioni = (ListView) findViewById(R.id.lstRiparazioni);
         TextView lblNumRip = (TextView) findViewById(R.id.txtNumeroRiparazioni);
         try {
@@ -222,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
         TextView lblVisErrori = (TextView) findViewById(R.id.lblVisErrori);
         lblVisErrori.setVisibility(View.VISIBLE);
         lblVisErrori.setText("Attenzione!!! Errore: "+msgErrore);
-        //Mettere il tag globale
         Log.i(TAG_LOG,"**************** " + msgErrore + " **********************");
     }
 }

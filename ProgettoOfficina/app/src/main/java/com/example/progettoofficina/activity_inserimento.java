@@ -27,6 +27,7 @@ public class activity_inserimento extends AppCompatActivity {
     private static final String url="http://192.168.1.189:80";
     //Tag di riferimento per i log generati dal progetto
     String TAG_LOG = "LOG_OFFICINA";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ public class activity_inserimento extends AppCompatActivity {
                             HTTPRequest reqCamp = new HTTPRequest(url + "/WebServicesOfficina/aggiungiRiparazione.php") {
                                 @Override
                                 protected void onPostExecute(String result) {
-                                    if (result.contains("Exception: "))
+                                    if (!result.contains("AddRiparazioneOk"))
                                         gestErrori(result);
                                     else {
                                         Toast.makeText(getApplicationContext(), "Riparazione aggiunta con successo", Toast.LENGTH_LONG).show();
@@ -124,6 +125,8 @@ public class activity_inserimento extends AppCompatActivity {
                     gestErroriInserimento("Indicare la data della riparazione");
             }else
                 gestErroriInserimento("Indicare l'auto");
+        }catch(ParseException ex){
+            gestErroriInserimento("Data riparazione non valida");
         }catch(Exception ex){
             gestErrori(ex.getMessage());
         }

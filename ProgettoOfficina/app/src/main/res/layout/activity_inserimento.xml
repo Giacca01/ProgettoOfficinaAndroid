@@ -91,8 +91,9 @@
         android:layout_marginEnd="55dp"
         android:ems="10"
         android:inputType="date|none"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="#DCDCDC"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cboAutoAddRip" />
 
@@ -104,8 +105,9 @@
         android:layout_marginEnd="55dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="#DCDCDC"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDataAddRip" />
 
@@ -117,8 +119,9 @@
         android:layout_marginEnd="55dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="#DCDCDC"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCausaAddRip" />
 
@@ -154,6 +157,7 @@
         android:background="#2e8b57"
         android:text="Aggiungi"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="#DCDCDC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

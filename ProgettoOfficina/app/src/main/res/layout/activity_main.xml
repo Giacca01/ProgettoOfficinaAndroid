@@ -147,13 +147,15 @@
         android:id="@+id/btnAddRiparazione"
         android:layout_width="83dp"
         android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="164dp"
         android:background="#2e8b57"
         android:text="Inserisci"
         android:textAlignment="center"
         android:textColor="#DCDCDC"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lstRiparazioni" />
 </androidx.constraintlayout.widget.ConstraintLayout>
