@@ -43,7 +43,9 @@ public class PersonalAdAuto extends ArrayAdapter<Auto> {
         TextView txtIdAuto=(TextView)v.findViewById(R.id.txtIdAuto);
         TextView txtMarcaAuto=(TextView)v.findViewById(R.id.txtMarcaAuto);
         TextView txtModelloAuto=(TextView)v.findViewById(R.id.txtModelloAuto);
+        //Recupero l'auto corrente
         Auto auto=listAuto.get(pos);
+        //Carico i dati dell'auto sull'adapter
         if (auto.getIdAuto() != 0)
             txtIdAuto.setText(String.valueOf(auto.getIdAuto()));
         else

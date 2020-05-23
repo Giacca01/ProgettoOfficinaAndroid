@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                     caricaClasseRiparazioni(result, listaRiparazioni);
                             }
                         };
+                        //Aggiungo il codice dell'auto in base a cui filtrare come parametro alla richiesta HTTP POST
                         reqFilter.addParam(HTTPRequest.POST,"idAuto",codAuto);
                         reqFilter.execute();
                     }

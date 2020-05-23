@@ -28,13 +28,18 @@ public class activity_inserimento extends AppCompatActivity {
     //Tag di riferimento per i log generati dal progetto
     String TAG_LOG = "LOG_OFFICINA";
 
+    /********************/
+    /*Routine Principale*/
+    /********************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inserimento);
         final Button btnAddRip = (Button)findViewById(R.id.btnAddRip);
         try {
+            //Caricamento spinner macchine
             caricaMacchine();
+            //Gestione aggiunta riparazione al click su apposito bottone
             btnAddRip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -53,6 +58,7 @@ public class activity_inserimento extends AppCompatActivity {
         //Carico combo con le auto
         final Spinner cboAddAuto = (Spinner) findViewById(R.id.cboAutoAddRip);
         final ArrayList<Auto> listaAuto= new ArrayList<Auto>();
+
         HTTPRequest reqCamp = new HTTPRequest(url + "/WebServicesOfficina/elencoMacchine.php") {
             @Override
             protected void onPostExecute(String result) {
@@ -82,6 +88,9 @@ public class activity_inserimento extends AppCompatActivity {
         reqCamp.execute();
     }
 
+    /*******************************/
+    /*Gestione Aggiunta Riparazione*/
+    /*******************************/
     private void addRiparazione(){
         Spinner cboAutoAddRip = (Spinner)findViewById(R.id.cboAutoAddRip);
         TextView txtDataAddRip = (TextView)findViewById(R.id.txtDataAddRip);
@@ -90,6 +99,7 @@ public class activity_inserimento extends AppCompatActivity {
         CheckBox chkPagatoAddRip = (CheckBox)findViewById(R.id.chkPagatoAddRip);
 
         try {
+            //Controllo dati di input
             if (cboAutoAddRip.getSelectedItemPosition() != -1){
                 if (txtDataAddRip.getText().toString().length() > 0){
                     if (txtCausaAddRip.getText().toString().length() > 0){
@@ -100,6 +110,7 @@ public class activity_inserimento extends AppCompatActivity {
                                     if (!result.contains("AddRiparazioneOk"))
                                         gestErrori(result);
                                     else {
+                                        //Segnalo il buon esito dell'operazione e torno all'activity di elenco delle riparazione
                                         Toast.makeText(getApplicationContext(), "Riparazione aggiunta con successo", Toast.LENGTH_LONG).show();
                                         Intent iForm2 = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(iForm2);
@@ -107,10 +118,14 @@ public class activity_inserimento extends AppCompatActivity {
                                     }
                                 }
                             };
+                            //Recupero l'auto selezionata e il relativo ID
                             Auto auto = (Auto)cboAutoAddRip.getSelectedItem();
+                            //Formatto la data prendento solo giorno mese ed anno
                             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                             Date dataRip = format.parse(txtDataAddRip.getText().toString());
+                            //Imposto la data nel formato accettato dal DBMS
                             format = new SimpleDateFormat("yyyy/MM/dd");
+                            //Preparazione Parametri richiesta inserimento
                             reqCamp.addParam(HTTPRequest.POST,"idAuto",auto.getIdAuto());
                             reqCamp.addParam(HTTPRequest.POST,"dataRiparazione",format.format(dataRip));
                             reqCamp.addParam(HTTPRequest.POST,"causaRiparazione",txtCausaAddRip.getText().toString());
@@ -132,6 +147,9 @@ public class activity_inserimento extends AppCompatActivity {
         }
     }
 
+    /*********************************/
+    /*Segnalazione Parametri Mancanti*/
+    /*********************************/
     private void gestErroriInserimento(String msgErroreIns){
         Toast.makeText(getApplicationContext(), "Operazione Fallita: " + msgErroreIns, Toast.LENGTH_LONG).show();
     }
@@ -171,7 +189,6 @@ public class activity_inserimento extends AppCompatActivity {
         TextView lblVisErrori = (TextView) findViewById(R.id.lblVisErroreAddRip);
         lblVisErrori.setVisibility(View.VISIBLE);
         lblVisErrori.setText("Attenzione!!! Errore: "+msgErrore);
-        //Mettere il tag globale
         Log.i(TAG_LOG,"**************** " + msgErrore + " **********************");
     }
 }

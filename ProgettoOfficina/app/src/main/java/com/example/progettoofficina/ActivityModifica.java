@@ -27,6 +27,10 @@ public class ActivityModifica extends AppCompatActivity {
     //Tag di riferimento per i log generati dal progetto
     String TAG_LOG = "LOG_OFFICINA";
     private int idRiparazione = 0;
+
+    /********************/
+    /*Routine Principale*/
+    /********************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,9 @@ public class ActivityModifica extends AppCompatActivity {
 
         Button btnModRip = (Button)findViewById(R.id.btnModRip);
         try {
+            //Caricamento spinner macchine
             caricaMacchine();
+            //Gestione modifica riparazione al click su apposito bottone
             btnModRip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -54,6 +60,7 @@ public class ActivityModifica extends AppCompatActivity {
         //Carico combo con le auto
         final Spinner cboAutoModRip = (Spinner) findViewById(R.id.cboAutoModRip);
         final ArrayList<Auto> listaAuto= new ArrayList<Auto>();
+
         HTTPRequest reqCamp = new HTTPRequest(url + "/WebServicesOfficina/elencoMacchine.php") {
             @Override
             protected void onPostExecute(String result) {
@@ -74,6 +81,9 @@ public class ActivityModifica extends AppCompatActivity {
                         }
                         PersonalAdAuto adC = new PersonalAdAuto(getApplicationContext(), R.id.linLayoutAuto, listaAuto);
                         cboAutoModRip.setAdapter(adC);
+                        //Carico i dati della riparazione nei campi di input
+                        //Eseguito in questo punto perchè altrimenti se venisse fatto prima della conclusione della richiesta HTTP
+                        //il codice dell'OnPostRequest sovrascriverebbe il valore selezionato nello spinner delle auto
                         caricaDatiRiparazione(getIntent().getExtras());
                     } catch (JSONException ex) {
                         gestErrori(ex.getMessage());
@@ -84,6 +94,9 @@ public class ActivityModifica extends AppCompatActivity {
         reqCamp.execute();
     }
 
+    /*************************************/
+    /*Caricamento dati riparazione scelta*/
+    /*************************************/
     protected void caricaDatiRiparazione(Bundle datiRiparazione){
         Spinner cboAutoModRip = (Spinner)findViewById(R.id.cboAutoModRip);
         TextView txtDataModRip = (TextView)findViewById(R.id.txtDataModRip);
@@ -92,11 +105,7 @@ public class ActivityModifica extends AppCompatActivity {
         CheckBox chkPagatoModRip = (CheckBox)findViewById(R.id.chkPagatoModRip);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-        //Auto a = new Auto();
-        //a.setIdAuto(2);
-        //a.setModelloAuto("Focus");
-        //a.setMarcaAuto("Ford");
-        //cboAutoModRip.setSelection(();
+        //Recupero i dati della riparazione scelta dall'utente dal bundle passato all'activity
         idRiparazione = datiRiparazione.getInt("idRip");
         cboAutoModRip.setSelection(datiRiparazione.getInt("idAuto")-1);
         txtDataModRip.setText(format.format(new Date(datiRiparazione.getString("dataRip"))));
@@ -108,6 +117,9 @@ public class ActivityModifica extends AppCompatActivity {
             chkPagatoModRip.setChecked(true);
     }
 
+    /*******************************/
+    /*Gestione Modifica Riparazione*/
+    /*******************************/
     private void modificaRiparazione(){
         Spinner cboAutoModRip = (Spinner)findViewById(R.id.cboAutoModRip);
         TextView txtDataModRip = (TextView)findViewById(R.id.txtDataModRip);
@@ -116,6 +128,7 @@ public class ActivityModifica extends AppCompatActivity {
         CheckBox chkPagatoModRip = (CheckBox)findViewById(R.id.chkPagatoModRip);
 
         try {
+            //Controllo dati di input
             if (cboAutoModRip.getSelectedItemPosition() != -1){
                 if (txtDataModRip.getText().toString().length() > 0){
                     if (txtCausaModRip.getText().toString().length() > 0){
@@ -126,6 +139,7 @@ public class ActivityModifica extends AppCompatActivity {
                                     if (!result.contains("ModRiparazioneOk"))
                                         gestErrori(result);
                                     else {
+                                        //Segnalo il buon esito dell'operazione e torno all'activity di elenco delle riparazione
                                         Toast.makeText(getApplicationContext(), "Riparazione modificata con successo", Toast.LENGTH_LONG).show();
                                         Intent iForm2 = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(iForm2);
@@ -133,10 +147,14 @@ public class ActivityModifica extends AppCompatActivity {
                                     }
                                 }
                             };
+                            //Recupero l'auto selezionata e il relativo ID
                             Auto auto = (Auto)cboAutoModRip.getSelectedItem();
+                            //Formatto la data prendento solo giorno mese ed anno
                             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                             Date dataRip = format.parse(txtDataModRip.getText().toString());
+                            //Imposto la data nel formato accettato dal DBMS
                             format = new SimpleDateFormat("yyyy/MM/dd");
+                            //Preparazione Parametri richiesta modifica
                             reqCamp.addParam(HTTPRequest.POST,"idRip",idRiparazione);
                             reqCamp.addParam(HTTPRequest.POST,"idAuto",auto.getIdAuto());
                             reqCamp.addParam(HTTPRequest.POST,"dataRiparazione",format.format(dataRip));
@@ -159,6 +177,9 @@ public class ActivityModifica extends AppCompatActivity {
         }
     }
 
+    /*********************************/
+    /*Segnalazione Parametri Mancanti*/
+    /*********************************/
     private void gestErroriModifica(String msgErroreIns){
         Toast.makeText(getApplicationContext(), "Operazione Fallita: " + msgErroreIns, Toast.LENGTH_LONG).show();
     }

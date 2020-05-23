@@ -37,7 +37,9 @@ public class PersonalAd extends ArrayAdapter<Riparazioni> {
         TextView txtCausa=(TextView)v.findViewById(R.id.txtCausa);
         TextView txtCosto=(TextView)v.findViewById(R.id.txtCosto);
         CheckBox chkPagato = (CheckBox)v.findViewById(R.id.chkPagato);
+        //Recupero la riparazione corrente
         Riparazioni riparazione=listRiparazioni.get(pos);
+        //Carico i dati della riparazione sull'adapter
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         txtData.setText(df.format("dd/MM/yyyy",riparazione.getDataRiparazione()));
         txtMarca.setText(riparazione.getMarcaAutoRiparazione());
@@ -48,7 +50,6 @@ public class PersonalAd extends ArrayAdapter<Riparazioni> {
             chkPagato.setChecked(false);
         else
             chkPagato.setChecked(true);
-        //chkPagato.setEnabled(false);
         return v;
     }
 }
