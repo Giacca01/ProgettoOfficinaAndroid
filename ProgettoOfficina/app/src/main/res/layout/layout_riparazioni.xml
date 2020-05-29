@@ -7,7 +7,7 @@
     android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/txtData"
-        android:layout_width="wrap_content"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAlignment="center"
@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/txtCausa"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAlignment="center"
@@ -48,7 +48,7 @@
 
     <TextView
         android:id="@+id/txtCosto"
-        android:layout_width="wrap_content"
+        android:layout_width="5dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAlignment="center"
@@ -57,12 +57,12 @@
     <CheckBox
         android:id="@+id/chkPagato"
         style="@android:style/Widget.Material.CompoundButton.CheckBox"
-        android:layout_width="wrap_content"
+        android:layout_width="3dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:clickable="false"
+        android:focusable="false"
         android:textAlignment="center"
-        android:textColor="#DCDCDC"
-        android:focusable="false"/>
+        android:textColor="#DCDCDC" />
 
 </LinearLayout>

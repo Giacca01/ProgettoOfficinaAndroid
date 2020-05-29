@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent iForm2 = new Intent(getApplicationContext(), activity_inserimento.class); //Intent: oggetto che consente di passare da un activity all'altra
                     startActivity(iForm2);
+                    finish();
                 }
             });
             //Apertura Activity per modifica riparazione
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     //Aggiungo il bundle tra gli extras dell'activity
                     iForm2.putExtras(bundle);
                     startActivity(iForm2);
+                    finish();
                 }
             });
         }
